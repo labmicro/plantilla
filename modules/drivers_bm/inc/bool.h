@@ -1,4 +1,7 @@
-/* Copyright 2016, XXXXXXXXXX
+/* Copyright 2014, Mariano Cerdeiro
+ * Copyright 2014, ACSE & CADIEEL
+ *    ACSE   : http://www.sase.com.ar/asociacion-civil-sistemas-embebidos/ciaa/
+ *    CADIEEL: http://www.cadieel.org.ar
  * All rights reserved.
  *
  * This file is part of CIAA Firmware.
@@ -31,20 +34,8 @@
  *
  */
 
-#ifndef TIMER_H
-#define TIMER_H
-/** \brief Bare Metal example header file
- **
- ** This is a mini example of the CIAA Firmware
- **
- **/
-
-/** \addtogroup CIAA_Firmware CIAA Firmware
- ** @{ */
-/** \addtogroup Examples CIAA Firmware Examples
- ** @{ */
-/** \addtogroup Baremetal Bare Metal example header file
- ** @{ */
+#ifndef CIAAPOSIX_STDBOOL_H
+#define CIAAPOSIX_STDBOOL_H
 
 /*
  * Initials     Name
@@ -59,12 +50,26 @@
  */
 
 /*==================[inclusions]=============================================*/
-#include "stdint.h"
 
+/*==================[cplusplus]==============================================*/
+#ifdef __cplusplus
+extern "C" {
+#endif
 
 /*==================[macros]=================================================*/
-#define lpc4337            1
-#define mk60fx512vlq15     2
+/** \brief true */
+#define true      1
+/** \brief false */
+#define false     0
+/** \brief bool
+ **
+ ** bool is not a type but a macro exapnded to _Bool
+ **/
+/*@-namechecks@*/
+#define bool   _Bool
+/** \brief Bool, true and false are defined */
+#define __bool_true_false_are_defined  1
+/*@=namechecks@*/
 
 /*==================[typedef]================================================*/
 
@@ -72,12 +77,11 @@
 
 /*==================[external functions declaration]=========================*/
 
-void timerInit();
+/*==================[cplusplus]==============================================*/
+#ifdef __cplusplus
+}
+#endif
 
-
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
-#endif /* #ifndef MI_NUEVO_PROYECTO_H */
+#endif /* #ifndef CIAAPOSIX_STDBOOL_H */
 

@@ -38,7 +38,7 @@
  ** @brief Ejemplo de un led parpadeando
  **
  ** Ejemplo de un led parpadeando utilizando la capa de abstraccion de 
- ** hardware y sin sistemas operativos.
+ ** hardware y con sistema operativo FreeRTOS.
  ** 
  ** | RV | YYYY.MM.DD | Autor       | Descripción de los cambios              |
  ** |----|------------|-------------|-----------------------------------------|
@@ -53,9 +53,8 @@
 /* === Inclusiones de cabeceras ============================================ */
 #include "FreeRTOS.h"
 #include "task.h"
-#include "unt.h"
 #include "soc.h"
-
+#include "led.h"
 /* === Definicion y Macros ================================================= */
 
 /* === Declaraciones de tipos de datos internos ============================ */
@@ -77,9 +76,7 @@ void Blinking(void * parametros);
 
 void Blinking(void * parametros) {
    while(1) {
-      Escribir_Segmentos(0x40, 3);
-      vTaskDelay(500 / portTICK_PERIOD_MS);
-      Escribir_Segmentos(0x00, 3);
+      Led_Toggle(RGB_B_LED);
       vTaskDelay(500 / portTICK_PERIOD_MS);
    }
 }
@@ -95,7 +92,7 @@ void Blinking(void * parametros) {
 int main(void) {
    /* Inicializaciones y configuraciones de dispositivos */
    SisTick_Init();
-   Init_PonchoUNT();
+   Init_Leds();
 
    /* Creación de las tareas */
    xTaskCreate(Blinking, "Azul", configMINIMAL_STACK_SIZE, NULL, tskIDLE_PRIORITY + 1, NULL);

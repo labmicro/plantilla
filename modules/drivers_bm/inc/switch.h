@@ -48,14 +48,6 @@
  **
  **/
 
-/** \addtogroup CIAA_Firmware CIAA Firmware
- ** @{ */
-
-/** \addtogroup Sources_LDM Leandro D. Medus Sources
- ** @{ */
-/** \addtogroup Baremetal Bare Metal source file
- ** @{ */
-
 /*
  * Initials     Name
  * ---------------------------
@@ -83,7 +75,7 @@
 
 
 /*==================[external data declaration]==============================*/
-enum SWITCHES {NO_KEY, TEC1, TEC2, TEC3, TEC4};
+enum SWITCHES {TECLA1=1, TECLA2=2, TECLA3=4, TECLA4=8};
 
 /*==================[external functions declaration]=========================*/
 /** \brief Initialization function to control basic push-buttons in the EDU-CIAA BOARD 
@@ -98,9 +90,6 @@ uint8_t Init_Switches(void);
  **/
 uint8_t Read_Switches(void);
 
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
 /*==================[end of file]============================================*/
 #endif /* #ifndef MI_NUEVO_PROYECTO_H */
 

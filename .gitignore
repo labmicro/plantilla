@@ -29,3 +29,5 @@ Temporary Items
 *.bin
 *.ipch
 **/out/**
+build
+.vscode

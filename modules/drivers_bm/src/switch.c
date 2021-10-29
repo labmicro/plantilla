@@ -136,19 +136,27 @@ uint8_t Init_Switches(void)
 
 uint8_t Read_Switches(void)
 {
-	uint8_t switchPressed = NO_KEY;
+	uint8_t switchPressed = 0;
 
 	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW1_GPIO_PORT,SW1_GPIO_PIN))
-		switchPressed = TEC1;
+		switchPressed |= TECLA1;
+	else
+		switchPressed &= ~TECLA1;
 
 	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW2_GPIO_PORT,SW2_GPIO_PIN))
-		switchPressed = TEC2;
+		switchPressed |= TECLA2;
+	else
+		switchPressed &= ~TECLA2;
 
 	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW3_GPIO_PORT,SW3_GPIO_PIN))
-		switchPressed = TEC3;
+		switchPressed |= TECLA3;
+	else
+		switchPressed &= ~TECLA3;
 
 	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW4_GPIO_PORT,SW4_GPIO_PIN))
-		switchPressed = TEC4;
+		switchPressed |= TECLA4;
+	else
+		switchPressed &= ~TECLA4;
 
 	return switchPressed;
 }

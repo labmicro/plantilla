@@ -30,11 +30,11 @@ CXXSRC+=$(foreach m, $(MODULES), $(wildcard $(m)/src/*.cpp))
 ASRC=$(wildcard $(PROJECT_PATH_AND_NAME)/src/*.s)
 ASRC+=$(foreach m, $(MODULES), $(wildcard $(m)/src/*.s))
 
-OUT=$(PROJECT_PATH_AND_NAME)/out
+OUT=build/$(PROJECT_PATH_AND_NAME)/out
 OBJECTS=$(CXXSRC:%.cpp=$(OUT)/%.o) $(ASRC:%.s=$(OUT)/%.o) $(SRC:%.c=$(OUT)/%.o)
 DEPS=$(OBJECTS:%.o=%.d)
 
-OOCD_SCRIPT=scripts/openocd/lpc4337.cfg
+OOCD_SCRIPT=scripts/openocd/lpc4337_new.cfg
 
 TARGET=$(OUT)/$(PROJECT_NAME).elf
 TARGET_BIN=$(basename $(TARGET)).bin
@@ -50,6 +50,7 @@ LIBSDEPS=$(addprefix $(OUT)/, $(addsuffix .a, $(basename $(foreach l, $(LIBS), $
 COMMON_FLAGS=$(ARCH_FLAGS) $(DEFINES_FLAGS) $(INCLUDE_FLAGS) $(OPT_FLAGS)
 
 CFLAGS=$(COMMON_FLAGS) -std=c99
+#CFLAGS=$(COMMON_FLAGS)
 CXXFLAGS=$(COMMON_FLAGS) -fno-rtti -fno-exceptions -std=c++11
 
 LDFLAGS=$(ARCH_FLAGS)
@@ -123,7 +124,8 @@ $(OUT)/linker-params: $(OBJECTS) $(LIBSDEPS) Makefile
 $(TARGET): $(OUT)/linker-params
 	@echo LD $@...
 	$(Q)$(LD) -o $@ @$(OUT)/linker-params
-
+	cp $@ build/project.elf
+	
 $(TARGET_BIN): $(TARGET)
 	@echo COPY $(notdir $<) TO $(notdir $@)
 	@mkdir -p $(dir $@)

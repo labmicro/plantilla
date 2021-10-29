@@ -1,4 +1,4 @@
-/* Copyright 2017,
+/* Copyright 2016, 
  * Leandro D. Medus
  * lmedus@bioingenieria.edu.ar
  * Eduardo Filomena
@@ -44,6 +44,7 @@
 
 /*==================[inclusions]=============================================*/
 #include "stdint.h"
+#include "chip.h"
 
 /*==================[macros]=================================================*/
 #define lpc4337            1
@@ -55,13 +56,12 @@
 /** \brief Definition of constants to reference the EDU-CIAA leds.
  **
  **/
-enum LED_COLOR {RGB_R_LED, RGB_G_LED, RGB_B_LED, RED_LED, YELLOW_LED, GREEN_LED};
+enum LED_COLOR {RGB_R_LED=1, RGB_G_LED=2, RGB_B_LED=4, RED_LED=8, YELLOW_LED=16,  GREEN_LED=32};
 
 
 /** \brief Definition of constants to control the EDU-CIAA leds.
  **
  **/
-enum LED_STATUS {OFF, ON};
 
 
 /*==================[external functions declaration]=========================*/
@@ -101,9 +101,15 @@ uint8_t Led_Off(uint8_t led);
  **/
 uint8_t Led_Toggle(uint8_t led);
 
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
+/** \brief Function to turn off all led 
+ ** 
+ ** \param[in] No Parameter 
+ **
+ ** \return FALSE if an error occurs, in other case returns TRUE
+ **/
+/* Function to turn off all leds, added by Gassmann Dustin */
+uint8_t Led_Off_All(void);
+
 /*==================[end of file]============================================*/
 #endif /* #ifndef LED_H */
 

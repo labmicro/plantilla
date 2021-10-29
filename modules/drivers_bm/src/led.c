@@ -1,4 +1,4 @@
-/* Copyright 2016, 
+	/* Copyright 2016, 
  * Leandro D. Medus
  * lmedus@bioingenieria.edu.ar
  * Eduardo Filomena
@@ -61,8 +61,6 @@
 
 /*==================[inclusions]=============================================*/
 #include "led.h"
-#include "chip.h"
-
 
 /*==================[macros and definitions]=================================*/
 /** Mapping RGB pins
@@ -113,7 +111,6 @@
 
 #define OUTPUT_DIRECTION   1
 #define INPUT_DIRECTION    0
-
 
 /*==================[internal data declaration]==============================*/
 
@@ -175,32 +172,32 @@ uint8_t Led_On(uint8_t led)
 	 * */
 	uint8_t result = FALSE;
 
-	if (led == RED_LED)
+	if (led & RED_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == YELLOW_LED)
+	if (led & YELLOW_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == GREEN_LED)
+	if (led & GREEN_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
 		result = TRUE;
 	}
-    if (led == RGB_R_LED)
+    if (led & RGB_R_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_G_LED)
+	if (led & RGB_G_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_B_LED)
+	if (led & RGB_B_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
 		result = TRUE;
@@ -216,32 +213,32 @@ uint8_t Led_Off(uint8_t led)
 		 * */
 	uint8_t result = FALSE;
 
-	if (led == RED_LED)
+	if (led & RED_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == YELLOW_LED)
+	if (led & YELLOW_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == GREEN_LED)
+	if (led & GREEN_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_R_LED)
+	if (led & RGB_R_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_G_LED)
+	if (led & RGB_G_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_B_LED)
+	if (led & RGB_B_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
 		result = TRUE;
@@ -249,49 +246,65 @@ uint8_t Led_Off(uint8_t led)
 	return result;
 }
 
-/** \brief Function to turn off a specific led */
+/** \brief Function to toggle led */
 uint8_t Led_Toggle(uint8_t led)
 {
-	/** \details Function to toogle a specific led at the EDU-CIAA board.
-	 * 	\params uint8_t led: this word represent a specific led based on the LED_COLOR enumeration.
-	 * */
-uint8_t result = FALSE;
+	/** \details Function to toggle led at the EDU-CIAA board.
+		 * 	\params
+		 * */
+	uint8_t result = FALSE;
 
-	if (led == RED_LED)
+	if (led & RED_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED1_GPIO_PORT, LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == YELLOW_LED)
+	if (led & YELLOW_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED2_GPIO_PORT, LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == GREEN_LED)
+	if (led & GREEN_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED3_GPIO_PORT, LED3_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_R_LED)
+	if (led & RGB_R_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_R_GPIO_PORT, LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_G_LED)
+	if (led & RGB_G_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_G_GPIO_PORT, LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led == RGB_B_LED)
+	if (led & RGB_B_LED)
 	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_B_GPIO_PORT, LED_RGB_B_GPIO_PIN);
 		result = TRUE;
 	}
 	return result;
-	
 }
 
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
-/** @} doxygen end group definition */
+/** \brief Function to turn off all led */
+/* Function to turn off all leds, added by Gassmann Dustin */
+uint8_t Led_Off_All(void)
+{
+	/** \details Function to turn off all led at the EDU-CIAA board.
+		 * 	\params
+		 * */
+	uint8_t result;
+
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
+	
+	return result = TRUE;
+}
+
+
 /*==================[end of file]============================================*/
