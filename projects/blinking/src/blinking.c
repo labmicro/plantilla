@@ -57,7 +57,7 @@
 /* === Definicion y Macros ================================================= */
 
 /** Valor de la cuenta para la función de espera */
-#define COUNT_DELAY 300000
+#define COUNT_DELAY 5000000
 
 /* === Declaraciones de tipos de datos internos ============================ */
 
