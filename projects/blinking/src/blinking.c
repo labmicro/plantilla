@@ -57,7 +57,7 @@
 /* === Definicion y Macros ================================================= */
 
 /** Valor de la cuenta para la función de espera */
-#define COUNT_DELAY 5000000
+#define COUNT_DELAY 10000000
 
 /* === Declaraciones de tipos de datos internos ============================ */
 
@@ -90,7 +90,8 @@ int main(void) {
     Init_Switches();
 
     while (1) {
-        Led_Toggle(YELLOW_LED);
+        Led_Toggle(RGB_B_LED);
+        Led_Toggle(EXTRA_LED);
         Delay();
     }
 

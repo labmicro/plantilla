@@ -124,7 +124,6 @@ $(OUT)/linker-params: $(OBJECTS) $(LIBSDEPS) Makefile
 $(TARGET): $(OUT)/linker-params
 	@echo LD $@...
 	$(Q)$(LD) -o $@ @$(OUT)/linker-params
-	cp $@ build/project.elf
 	
 $(TARGET_BIN): $(TARGET)
 	@echo COPY $(notdir $<) TO $(notdir $@)
@@ -149,6 +148,7 @@ $(TARGET_NM): $(TARGET)
 	$(Q)$(NM) -nAsSCp $< > $@
 
 size: $(TARGET)
+	cp $< build/project.elf
 	$(Q)$(SIZE) $<
 
 .download_flash: $(TARGET_BIN)
