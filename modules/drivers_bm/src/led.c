@@ -109,10 +109,31 @@
 #define LED3_GPIO_PORT     1
 #define LED3_GPIO_PIN      12
 
-#define LED4_MUX_GROUP     6
-#define LED4_MUX_PIN       12
-#define LED4_GPIO_PORT     2
-#define LED4_GPIO_PIN      8
+#define GPIO4_MUX_GROUP     6
+#define GPIO4_MUX_PIN       8
+#define GPIO4_GPIO_PORT     5
+#define GPIO4_GPIO_PIN      15
+
+#define GPIO5_MUX_GROUP     6
+#define GPIO5_MUX_PIN       9
+#define GPIO5_GPIO_PORT     3
+#define GPIO5_GPIO_PIN      5
+
+#define GPIO6_MUX_GROUP     6
+#define GPIO6_MUX_PIN       10
+#define GPIO6_GPIO_PORT     3
+#define GPIO6_GPIO_PIN      6
+
+#define GPIO7_MUX_GROUP     6
+#define GPIO7_MUX_PIN       11
+#define GPIO7_GPIO_PORT     3
+#define GPIO7_GPIO_PIN      7
+
+#define GPIO8_MUX_GROUP     6
+#define GPIO8_MUX_PIN       12
+#define GPIO8_GPIO_PORT     2
+#define GPIO8_GPIO_PIN      8
+
 
 #define OUTPUT_DIRECTION   1
 #define INPUT_DIRECTION    0
@@ -149,7 +170,12 @@ uint8_t Init_Leds(void)
 	Chip_SCU_PinMux(LED1_MUX_GROUP,LED1_MUX_PIN,MD_PUP,FUNC0);
 	Chip_SCU_PinMux(LED2_MUX_GROUP,LED2_MUX_PIN,MD_PUP,FUNC0);
 	Chip_SCU_PinMux(LED3_MUX_GROUP,LED3_MUX_PIN,MD_PUP,FUNC0);
-	Chip_SCU_PinMux(LED4_MUX_GROUP,LED4_MUX_PIN,MD_PUP,FUNC0);
+
+	Chip_SCU_PinMux(GPIO4_MUX_GROUP,GPIO4_MUX_PIN,MD_PUP,FUNC4);
+	Chip_SCU_PinMux(GPIO5_MUX_GROUP,GPIO5_MUX_PIN,MD_PUP,FUNC0);
+	Chip_SCU_PinMux(GPIO6_MUX_GROUP,GPIO6_MUX_PIN,MD_PUP,FUNC0);
+	Chip_SCU_PinMux(GPIO7_MUX_GROUP,GPIO7_MUX_PIN,MD_PUP,FUNC0);
+	Chip_SCU_PinMux(GPIO8_MUX_GROUP,GPIO8_MUX_PIN,MD_PUP,FUNC0);
 
 
 	/** Set RGB port as output*/
@@ -162,14 +188,24 @@ uint8_t Init_Leds(void)
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, LED2_GPIO_PORT,1<<LED2_GPIO_PIN,OUTPUT_DIRECTION);
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, LED3_GPIO_PORT,1<<LED3_GPIO_PIN,OUTPUT_DIRECTION);
 
-	/** Set LED4 port as output*/
-	Chip_GPIO_SetDir(LPC_GPIO_PORT, LED4_GPIO_PORT,1<<LED4_GPIO_PIN,OUTPUT_DIRECTION);
+	/** Set GPIO4 port as output*/
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, GPIO4_GPIO_PORT,1<<GPIO4_GPIO_PIN,OUTPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, GPIO5_GPIO_PORT,1<<GPIO5_GPIO_PIN,OUTPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, GPIO6_GPIO_PORT,1<<GPIO6_GPIO_PIN,OUTPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, GPIO7_GPIO_PORT,1<<GPIO7_GPIO_PIN,OUTPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, GPIO8_GPIO_PORT,1<<GPIO8_GPIO_PIN,OUTPUT_DIRECTION);
+
 
 	Chip_GPIO_ClearValue(LPC_GPIO_PORT, LED_RGB_R_GPIO_PORT,(1<<LED_RGB_R_GPIO_PIN)|(1<<LED_RGB_G_GPIO_PIN)|(1<<LED_RGB_B_GPIO_PIN));
 	Chip_GPIO_ClearValue(LPC_GPIO_PORT, LED1_GPIO_PORT,1<<LED1_GPIO_PIN);
 	Chip_GPIO_ClearValue(LPC_GPIO_PORT, LED2_GPIO_PORT,1<<LED2_GPIO_PIN);
 	Chip_GPIO_ClearValue(LPC_GPIO_PORT, LED3_GPIO_PORT,1<<LED3_GPIO_PIN);
-	Chip_GPIO_ClearValue(LPC_GPIO_PORT, LED4_GPIO_PORT,1<<LED4_GPIO_PIN);
+
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, GPIO4_GPIO_PORT,1<<GPIO4_GPIO_PIN);
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, GPIO5_GPIO_PORT,1<<GPIO5_GPIO_PIN);
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, GPIO6_GPIO_PORT,1<<GPIO6_GPIO_PIN);
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, GPIO7_GPIO_PORT,1<<GPIO7_GPIO_PIN);
+	Chip_GPIO_ClearValue(LPC_GPIO_PORT, GPIO8_GPIO_PORT,1<<GPIO8_GPIO_PIN);
 
 	return TRUE;
 }
@@ -182,41 +218,67 @@ uint8_t Led_On(uint8_t led)
 	 * */
 	uint8_t result = FALSE;
 
-	if (led & RED_LED)
+	if (led == RED_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & YELLOW_LED)
+	if (led == YELLOW_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & GREEN_LED)
+	if (led == GREEN_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & EXTRA_LED)
-	{
-		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED4_GPIO_PORT,LED4_GPIO_PIN);
-		result = TRUE;
-	}
-    if (led & RGB_R_LED)
+    if (led == RGB_R_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_G_LED)
+	if (led == RGB_G_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_B_LED)
+	if (led == RGB_B_LED)
 	{
 		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
 		result = TRUE;
 	}
+
+	if (led == GPIO4)
+	{
+		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,GPIO4_GPIO_PORT,GPIO4_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO5)
+	{
+		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,GPIO5_GPIO_PORT,GPIO5_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO6)
+	{
+		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,GPIO6_GPIO_PORT,GPIO6_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO7)
+	{
+		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,GPIO7_GPIO_PORT,GPIO7_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO8)
+	{
+		Chip_GPIO_SetPinOutHigh(LPC_GPIO_PORT,GPIO8_GPIO_PORT,GPIO8_GPIO_PIN);
+		result = TRUE;
+	}
+
 	return result;
 }
 
@@ -228,41 +290,69 @@ uint8_t Led_Off(uint8_t led)
 		 * */
 	uint8_t result = FALSE;
 
-	if (led & RED_LED)
+	if (led == RED_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & YELLOW_LED)
+	if (led == YELLOW_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & GREEN_LED)
+	if (led == GREEN_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & EXTRA_LED)
-	{
-		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED4_GPIO_PORT,LED4_GPIO_PIN);
-		result = TRUE;
-	}
-	if (led & RGB_R_LED)
+
+	if (led == RGB_R_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_G_LED)
+	if (led == RGB_G_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_B_LED)
+	if (led == RGB_B_LED)
 	{
 		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
 		result = TRUE;
 	}
+
+
+	if (led == GPIO4)
+	{
+		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO4_GPIO_PORT,GPIO4_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO5)
+	{
+		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO5_GPIO_PORT,GPIO5_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO6)
+	{
+		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO6_GPIO_PORT,GPIO6_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO7)
+	{
+		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO7_GPIO_PORT,GPIO7_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO8)
+	{
+		Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO8_GPIO_PORT,GPIO8_GPIO_PIN);
+		result = TRUE;
+	}
+
 	return result;
 }
 
@@ -274,41 +364,67 @@ uint8_t Led_Toggle(uint8_t led)
 		 * */
 	uint8_t result = FALSE;
 
-	if (led & RED_LED)
+	if (led == RED_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED1_GPIO_PORT, LED1_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & YELLOW_LED)
+	if (led == YELLOW_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED2_GPIO_PORT, LED2_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & GREEN_LED)
+	if (led == GREEN_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED3_GPIO_PORT, LED3_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & EXTRA_LED)
-	{
-		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,LED4_GPIO_PORT,LED4_GPIO_PIN);
-		result = TRUE;
-	}
-	if (led & RGB_R_LED)
+
+	if (led == RGB_R_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_R_GPIO_PORT, LED_RGB_R_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_G_LED)
+	if (led == RGB_G_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_G_GPIO_PORT, LED_RGB_G_GPIO_PIN);
 		result = TRUE;
 	}
-	if (led & RGB_B_LED)
+	if (led == RGB_B_LED)
 	{
 		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT, LED_RGB_B_GPIO_PORT, LED_RGB_B_GPIO_PIN);
 		result = TRUE;
 	}
+
+	if (led == GPIO4)
+	{
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,GPIO4_GPIO_PORT,GPIO4_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO5)
+	{
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,GPIO5_GPIO_PORT,GPIO5_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO6)
+	{
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,GPIO6_GPIO_PORT,GPIO6_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO7)
+	{
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,GPIO7_GPIO_PORT,GPIO7_GPIO_PIN);
+		result = TRUE;
+	}
+
+	if (led == GPIO8)
+	{
+		Chip_GPIO_SetPinToggle(LPC_GPIO_PORT,GPIO8_GPIO_PORT,GPIO8_GPIO_PIN);
+		result = TRUE;
+	}	
 	return result;
 }
 
@@ -324,11 +440,17 @@ uint8_t Led_Off_All(void)
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED1_GPIO_PORT,LED1_GPIO_PIN);
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED2_GPIO_PORT,LED2_GPIO_PIN);
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED3_GPIO_PORT,LED3_GPIO_PIN);
-	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED4_GPIO_PORT,LED4_GPIO_PIN);
+
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_R_GPIO_PORT,LED_RGB_R_GPIO_PIN);
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_G_GPIO_PORT,LED_RGB_G_GPIO_PIN);
 	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,LED_RGB_B_GPIO_PORT,LED_RGB_B_GPIO_PIN);
-	
+
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO4_GPIO_PORT,GPIO4_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO5_GPIO_PORT,GPIO5_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO6_GPIO_PORT,GPIO6_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO7_GPIO_PORT,GPIO7_GPIO_PIN);
+	Chip_GPIO_SetPinOutLow(LPC_GPIO_PORT,GPIO8_GPIO_PORT,GPIO8_GPIO_PIN);
+
 	return result = TRUE;
 }
 

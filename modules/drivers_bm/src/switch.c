@@ -89,6 +89,26 @@
 #define SW4_GPIO_PORT 	1
 #define SW4_GPIO_PIN 	9
 
+#define SW5_MUX_GROUP 	6
+#define SW5_MUX_PIN 	1
+#define SW5_GPIO_PORT 	3
+#define SW5_GPIO_PIN 	0
+
+#define SW6_MUX_GROUP 	6
+#define SW6_MUX_PIN 	4
+#define SW6_GPIO_PORT 	3
+#define SW6_GPIO_PIN 	4
+
+#define SW7_MUX_GROUP 	6
+#define SW7_MUX_PIN 	5
+#define SW7_GPIO_PORT 	3
+#define SW7_GPIO_PIN 	5
+
+#define SW8_MUX_GROUP 	6
+#define SW8_MUX_PIN 	7
+#define SW8_GPIO_PORT 	5
+#define SW8_GPIO_PIN 	15
+
 #define OUTPUT_DIRECTION 1
 #define INPUT_DIRECTION 0
 
@@ -125,11 +145,21 @@ uint8_t Init_Switches(void)
 	Chip_SCU_PinMux(SW3_MUX_GROUP,SW3_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC0);
 	Chip_SCU_PinMux(SW4_MUX_GROUP,SW4_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC0);
 
+	Chip_SCU_PinMux(SW5_MUX_GROUP,SW5_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC0);
+	Chip_SCU_PinMux(SW6_MUX_GROUP,SW6_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC0);
+	Chip_SCU_PinMux(SW7_MUX_GROUP,SW7_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC0);
+	Chip_SCU_PinMux(SW8_MUX_GROUP,SW8_MUX_PIN,MD_PUP|MD_EZI|MD_ZI,FUNC4);
+
 	/* Configuración como entrada para los pulsadores */
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW1_GPIO_PORT,1<<SW1_GPIO_PIN,INPUT_DIRECTION);
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW2_GPIO_PORT,1<<SW2_GPIO_PIN,INPUT_DIRECTION);
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW3_GPIO_PORT,1<<SW3_GPIO_PIN,INPUT_DIRECTION);
 	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW4_GPIO_PORT,1<<SW4_GPIO_PIN,INPUT_DIRECTION);
+
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW5_GPIO_PORT,1<<SW5_GPIO_PIN,INPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW6_GPIO_PORT,1<<SW6_GPIO_PIN,INPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW7_GPIO_PORT,1<<SW7_GPIO_PIN,INPUT_DIRECTION);
+	Chip_GPIO_SetDir(LPC_GPIO_PORT, SW8_GPIO_PORT,1<<SW8_GPIO_PIN,INPUT_DIRECTION);
 
 	return TRUE;
 }
@@ -157,6 +187,26 @@ uint8_t Read_Switches(void)
 		switchPressed |= TECLA4;
 	else
 		switchPressed &= ~TECLA4;
+
+	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW5_GPIO_PORT,SW5_GPIO_PIN))
+		switchPressed |= GPIO0;
+	else
+		switchPressed &= ~GPIO0;
+
+	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW6_GPIO_PORT,SW6_GPIO_PIN))
+		switchPressed |= GPIO1;
+	else
+		switchPressed &= ~GPIO1;
+
+	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW7_GPIO_PORT,SW7_GPIO_PIN))
+		switchPressed |= GPIO2;
+	else
+		switchPressed &= ~GPIO2;
+
+	if (!Chip_GPIO_ReadPortBit(LPC_GPIO_PORT,SW8_GPIO_PORT,SW8_GPIO_PIN))
+		switchPressed |= GPIO3;
+	else
+		switchPressed &= ~GPIO3;
 
 	return switchPressed;
 }

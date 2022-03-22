@@ -85,14 +85,23 @@ void Delay(void) {
 
 /* === Definiciones de funciones externas ================================== */
 int main(void) {
+    uint8_t teclas;
+
     /* Configuración de los dispositivos de entrada/salida */
     Init_Leds();
     Init_Switches();
 
     while (1) {
-        Led_Toggle(RGB_B_LED);
-        Led_Toggle(GPIO8);
+        teclas = Read_Switches();
+        if ((teclas & TECLA1) || (teclas & GPIO0)) {
+            Led_On(RGB_B_LED);
+            Led_On(GPIO8);
+        } else {
+            Led_Off(RGB_B_LED);
+            Led_Off(GPIO8);
+        }
         Delay();
+
     }
 
     return 0;

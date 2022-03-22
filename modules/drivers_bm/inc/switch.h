@@ -75,7 +75,10 @@
 
 
 /*==================[external data declaration]==============================*/
-enum SWITCHES {TECLA1=1, TECLA2=2, TECLA3=4, TECLA4=8};
+enum SWITCHES {
+    TECLA1=1, TECLA2=2, TECLA3=4, TECLA4=8, 
+    GPIO0=16, GPIO1=32, GPIO2=64, GPIO3=128,
+};
 
 /*==================[external functions declaration]=========================*/
 /** \brief Initialization function to control basic push-buttons in the EDU-CIAA BOARD 
